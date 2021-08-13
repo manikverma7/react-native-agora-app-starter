@@ -1,27 +1,37 @@
-import React, { useState } from 'react';
+import React, {useState} from "react";
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
-} from 'react-native';
+} from "react-native";
 
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from "@react-navigation/native";
+
+import "react-native-get-random-values";
+import {v4 as uuid} from "uuid";
 
 export default function Home() {
   const navigation = useNavigation();
-  const [joinChannel, setJoinChannel] = useState('');
+  const [joinChannel, setJoinChannel] = useState("");
 
-  const createLive = () => navigation.navigate('Live', { type: 'create' });
-  const joinLive = () => navigation.navigate('Live', { type: 'join' });
+  const createLive = () => {
+    navigation.navigate("Live", {type: "create", channel: "channel-x"});
+    setJoinChannel("");
+  };
+
+  const joinLive = () => {
+    navigation.navigate("Live", {type: "join", channel: joinChannel});
+    setJoinChannel("");
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Livestream App</Text>
       <View style={styles.createContainer}>
         <TouchableOpacity style={styles.button} onPress={createLive}>
-          <Text style={styles.buttonText}>Start</Text>
+          <Text style={styles.buttonText}>Start Live</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.joinContainer}>
@@ -35,9 +45,10 @@ export default function Home() {
           onPress={joinLive}
           style={[
             styles.button,
-            { backgroundColor: joinChannel === '' ? '#555555' : '#78b0ff' },
+            {backgroundColor: joinChannel === "" ? "#555555" : "#0093E9"},
           ]}
-          disabled={joinChannel === ''}>
+          disabled={joinChannel === ""}
+        >
           <Text style={styles.buttonText}>Join</Text>
         </TouchableOpacity>
       </View>
@@ -48,48 +59,48 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 30,
     marginBottom: 50,
-    color: '#333',
+    color: "#333",
   },
   createContainer: {
-    width: '90%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "90%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   joinContainer: {
-    width: '90%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "90%",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 50,
     paddingTop: 50,
     borderTopWidth: 1,
-    borderColor: '#22222255',
+    borderColor: "#22222255",
   },
   joinChannelInput: {
-    backgroundColor: '#cccccc77',
-    width: '100%',
+    backgroundColor: "#cccccc77",
+    width: "100%",
     borderRadius: 8,
     paddingHorizontal: 20,
     fontSize: 17,
-    textAlign: 'center',
+    textAlign: "center",
   },
   button: {
-    width: '100%',
+    width: "100%",
     marginTop: 15,
     borderRadius: 8,
     paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#78b0ff',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#0093E9",
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 20,
   },
 });
